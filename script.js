@@ -1,4 +1,4 @@
-let ngrokURL = "https://abc123.ngrok.io";  // Replace this with your Pi ngrok URL
+let ngrokURL = "https://afaf-2605-8d80-8020-8b9-00-fe4.ngrok-free.";  // Replace this with your Pi ngrok URL
 
 function login() {
     const username = document.getElementById("username").value;
