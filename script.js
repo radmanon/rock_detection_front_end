@@ -1,4 +1,5 @@
-let ngrokURL = "https://afaf-2605-8d80-8020-8b9-00-fe4.ngrok-free.";  // Replace this with your Pi ngrok URL
+let backendURL = "https://746c-2605-8d80-8020-8b9-e19a-45fa-102c-e9fc.ngrok-free.app/";
+
 
 function login() {
     const username = document.getElementById("username").value;
