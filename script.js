@@ -20,3 +20,24 @@ function startDetection() {
             console.error(err);
         });
 }
+
+function uploadImage() {
+    const fileInput = document.getElementById("imageInput");
+    if (fileInput.files.length === 0) return;
+
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+
+    fetch(`${ngrokURL}/predict-image`, {
+        method: "POST",
+        body: formData
+    })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("response").innerText = data.status;
+        })
+        .catch(err => {
+            document.getElementById("response").innerText = "❌ Prediction failed.";
+            console.error(err);
+        });
+}
