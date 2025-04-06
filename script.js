@@ -11,7 +11,7 @@ function login() {
 }
 
 function startDetection() {
-    fetch(`${ngrokURL}/start-detection`)
+    fetch(`${backendURL}/start-detection`)
         .then(response => response.json())
         .then(data => {
             document.getElementById("response").innerText = data.status || "Triggered!";
@@ -29,7 +29,7 @@ function uploadImage() {
     const formData = new FormData();
     formData.append("file", fileInput.files[0]);
 
-    fetch(`${ngrokURL}/predict-image`, {
+    fetch(`${backendURL}/predict-image`, {
         method: "POST",
         body: formData
     })
