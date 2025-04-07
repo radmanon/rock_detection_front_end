@@ -49,3 +49,11 @@ function uploadImage() {
             console.error("Upload error:", err);
         });
 }
+
+
+function startDetection() {
+    document.getElementById("response").innerText = "Starting live detection...";
+    const liveFeed = document.getElementById("liveFeed");
+    liveFeed.src = `${backendURL}/video_feed`; // MJPEG stream
+    liveFeed.style.display = "block";
+}
