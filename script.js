@@ -49,7 +49,13 @@ function uploadImage() {
         })
         .then(data => {
             document.getElementById("response").innerText = data.status || "✅ Prediction complete!";
+
+            // Display the predicted image
+            const predictedImage = document.getElementById("predictedImage");
+            predictedImage.src = `${backendURL}/${data.result_path}`;
+            predictedImage.style.display = "block";
         })
+
         .catch(err => {
             document.getElementById("response").innerText = "❌ Prediction failed.";
             console.error("Upload error:", err);
