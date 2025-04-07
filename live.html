@@ -1,14 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Live Rock Detection</title>
+    <link rel="stylesheet" href="live.css" />
 </head>
 
 <body>
-    <h1>🪨 Live Rock Detection Stream</h1>
-    <img id="liveVideo" src="https://4582-2605-8d80-8020-8b9-e19a-45fa-102c-e9fc.ngrok-free.app/video_feed" style="width: 80%; border: 2px solid black;" />
-    <p>Close this tab to stop the stream.</p>
+    <div class="container">
+        <h1>🎥 Live Rock Detection</h1>
+
+        <div class="video-container">
+            <img id="liveVideo" src="https://4582-2605-8d80-8020-8b9-e19a-45fa-102c-e9fc.ngrok-free.app/video_feed"
+                alt="Live Stream">
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="close-btn" onclick="closeStream()">⛔ Close Camera</button>
+            <button type="button" class="back-btn" onclick="window.location.href='index.html'">🔙 Back to
+                Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        function closeStream() {
+            window.close(); // Will close the tab (only works if it was opened by JS)
+        }
+    </script>
 </body>
 
 </html>
