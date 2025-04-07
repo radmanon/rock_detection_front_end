@@ -9,28 +9,12 @@ function login() {
     }
 }
 
-function startDetection() {
-    document.getElementById("response").innerText = "Starting live detection...";
-
-    fetch(`${backendURL}/start-detection`)
-        .then(response => {
-            if (!response.ok) throw new Error("❌ Server returned error for live detection");
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById("response").innerText = data.status || "✅ Live Detection Started!";
-            document.getElementById("liveFeed").src = `${backendURL}/video_feed`;
-        })
-        .catch(err => {
-            document.getElementById("response").innerText = "❌ Failed to connect to backend.";
-            console.error("Live detection error:", err);
-        });
-
-    // Optional error handling if the image can't load
-    document.getElementById("liveFeed").onerror = () => {
-        document.getElementById("response").innerText = "❌ Failed to load video feed.";
-    };
+// ✅ New: open /video_feed in a separate browser tab
+function openLiveStream() {
+    document.getElementById("response").innerText = "Opening live stream page...";
+    window.open(`${backendURL}/video_feed`, '_blank');
 }
+
 
 function uploadImage() {
     const fileInput = document.getElementById("imageInput");
@@ -44,18 +28,16 @@ function uploadImage() {
         body: formData
     })
         .then(res => {
-            if (!res.ok) throw new Error("❌ Prediction endpoint returned error");
+            if (!res.ok) throw new Error("❌ Prediction error");
             return res.json();
         })
         .then(data => {
-            document.getElementById("response").innerText = data.status || "✅ Prediction complete!";
+            document.getElementById("response").innerText = data.status;
 
-            // Display the predicted image
-            const predictedImage = document.getElementById("predictedImage");
-            predictedImage.src = `${backendURL}/${data.result_path}`;
-            predictedImage.style.display = "block";
+            // ✅ Open predicted image in new tab
+            const fullImageURL = `${backendURL}${data.result_path}`;
+            window.open(fullImageURL, '_blank');
         })
-
         .catch(err => {
             document.getElementById("response").innerText = "❌ Prediction failed.";
             console.error("Upload error:", err);
