@@ -10,6 +10,8 @@ function login() {
 }
 
 function startDetection() {
+    document.getElementById("response").innerText = "Starting live detection...";
+
     fetch(`${backendURL}/start-detection`)
         .then(response => {
             if (!response.ok) throw new Error("❌ Server returned error for live detection");
@@ -17,11 +19,17 @@ function startDetection() {
         })
         .then(data => {
             document.getElementById("response").innerText = data.status || "✅ Live Detection Started!";
+            document.getElementById("liveFeed").src = `${backendURL}/video_feed`;
         })
         .catch(err => {
             document.getElementById("response").innerText = "❌ Failed to connect to backend.";
             console.error("Live detection error:", err);
         });
+
+    // Optional error handling if the image can't load
+    document.getElementById("liveFeed").onerror = () => {
+        document.getElementById("response").innerText = "❌ Failed to load video feed.";
+    };
 }
 
 function uploadImage() {
@@ -36,9 +44,7 @@ function uploadImage() {
         body: formData
     })
         .then(res => {
-            if (!res.ok) {
-                throw new Error("❌ Prediction endpoint returned error");
-            }
+            if (!res.ok) throw new Error("❌ Prediction endpoint returned error");
             return res.json();
         })
         .then(data => {
@@ -48,17 +54,4 @@ function uploadImage() {
             document.getElementById("response").innerText = "❌ Prediction failed.";
             console.error("Upload error:", err);
         });
-}
-
-
-function startDetection() {
-    document.getElementById("response").innerText = "Starting live detection...";
-
-    // Set the webcam stream URL (FastAPI backend route)
-    document.getElementById("liveFeed").src = `${backendURL}/video_feed`;
-
-    // Optional: In case it fails, handle error
-    document.getElementById("liveFeed").onerror = () => {
-        document.getElementById("response").innerText = "❌ Failed to load video feed.";
-    };
 }
