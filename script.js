@@ -1,4 +1,4 @@
-let backendURL = "https://4582-2605-8d80-8020-8b9-e19a-45fa-102c-e9fc.ngrok-free.app";
+let backendURL = "https://0930-142-232-152-27.ngrok-free.app";
 
 function login() {
     const username = document.getElementById("username").value;
@@ -9,7 +9,6 @@ function login() {
     }
 }
 
-// ✅ New: open /video_feed in a separate browser tab
 function openLiveStream() {
     document.getElementById("response").innerText = "Opening live stream page...";
     window.open(`${backendURL}/video_feed`, '_blank');
@@ -34,7 +33,6 @@ function uploadImage() {
         .then(data => {
             document.getElementById("response").innerText = data.status;
 
-            // ✅ Open predicted image in new tab
             const fullImageURL = `${backendURL}${data.result_path}`;
             window.open(fullImageURL, '_blank');
         })
