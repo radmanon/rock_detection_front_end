@@ -1,4 +1,4 @@
-let backendURL = "https://7fcf-2605-8d80-8020-8b9-e19a-45fa-102c-e9fc.ngrok-free.app";
+let backendURL = "https://275d-2605-8d80-8020-8b9-e19a-45fa-102c-e9fc.ngrok-free.app";
 
 function login() {
     const username = document.getElementById("username").value;
@@ -11,13 +11,16 @@ function login() {
 
 function startDetection() {
     fetch(`${backendURL}/start-detection`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error("❌ Server returned error for live detection");
+            return response.json();
+        })
         .then(data => {
-            document.getElementById("response").innerText = data.status || "Triggered!";
+            document.getElementById("response").innerText = data.status || "✅ Live Detection Started!";
         })
         .catch(err => {
-            document.getElementById("response").innerText = "❌ Failed to connect to Pi.";
-            console.error(err);
+            document.getElementById("response").innerText = "❌ Failed to connect to backend.";
+            console.error("Live detection error:", err);
         });
 }
 
@@ -32,12 +35,17 @@ function uploadImage() {
         method: "POST",
         body: formData
     })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("❌ Prediction endpoint returned error");
+            }
+            return res.json();
+        })
         .then(data => {
-            document.getElementById("response").innerText = data.status;
+            document.getElementById("response").innerText = data.status || "✅ Prediction complete!";
         })
         .catch(err => {
             document.getElementById("response").innerText = "❌ Prediction failed.";
-            console.error(err);
+            console.error("Upload error:", err);
         });
 }
