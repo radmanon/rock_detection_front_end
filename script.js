@@ -53,7 +53,12 @@ function uploadImage() {
 
 function startDetection() {
     document.getElementById("response").innerText = "Starting live detection...";
-    const liveFeed = document.getElementById("liveFeed");
-    liveFeed.src = `${backendURL}/video_feed`; // MJPEG stream
-    liveFeed.style.display = "block";
+
+    // Set the webcam stream URL (FastAPI backend route)
+    document.getElementById("liveFeed").src = `${backendURL}/video_feed`;
+
+    // Optional: In case it fails, handle error
+    document.getElementById("liveFeed").onerror = () => {
+        document.getElementById("response").innerText = "❌ Failed to load video feed.";
+    };
 }
